@@ -20,7 +20,8 @@ def randomize_url(url: str, max: int):
   for i in range(max):
     choice = random.choice(choices) # Get 1 random value
     result+=choice
-    
+  
+  print(f"Using URL >> {result}\n")
   return result
 
 def userInteract():
@@ -60,9 +61,13 @@ while(True):
   urllib.request.install_opener(opener)
 
   # Download the image
-  urllib.request.urlretrieve(
-    image_path,
-    "screenshot_random.png")
+  try:
+    urllib.request.urlretrieve(
+      image_path,
+      "screenshot_random.png")
+  except ValueError:
+    print(f"{Fore.ORANGE}! Unexpected Error Occurred On URL {URL}\n ! {Style.RESET_ALL}")
+    continue
 
   # Open up and display the image
   img = Image.open("screenshot_random.png")
