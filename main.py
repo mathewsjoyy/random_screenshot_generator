@@ -8,7 +8,14 @@ import string
 import random
 from colorama import Fore
 from colorama import Style
+import sys, time 
+ 
 
+def prettyPrint(text: str):
+  for char in text: 
+      print(char, end='') 
+      sys.stdout.flush() 
+      time.sleep(0.05)
 
 def randomize_url(url: str, max: int): 
   # This is just a long string of all possible letters and numbers
@@ -21,20 +28,21 @@ def randomize_url(url: str, max: int):
     choice = random.choice(choices) # Get 1 random value
     result+=choice
   
-  print(f"Using URL >> {result}\n")
+  prettyPrint(f"\nUsing URL >> {result}\n")
   return result
 
 def userInteract():
   while(True):
     try:
-      user_option = input(f"> Types {Fore.GREEN}yes{Style.RESET_ALL} to generate another image, or {Fore.RED}no{Style.RESET_ALL} to exit.\n")
+      prettyPrint(f"> Types {Fore.GREEN}yes{Style.RESET_ALL} to generate another image, or {Fore.RED}no{Style.RESET_ALL} to exit.\n")
+      user_option = input()
       
       if user_option in ["yes", "Yes", "YES", "y", "Y"]:
         return True # Carry on/nothing happens
       if user_option in ["no", "No", "NO", "n", "N"]:
         return False # Exit successfully
     except:
-      print("! Unexpected error occurred, Try again !")
+      prettyPrint("! Unexpected error occurred, Try again !")
   
 
 while(True):
@@ -65,7 +73,7 @@ while(True):
     urllib.request.urlretrieve(
       image_path,
       "screenshot_random.png")
-  except ValueError:
+  except Exception:
     print(f"{Fore.ORANGE}! Unexpected Error Occurred On URL {URL}\n ! {Style.RESET_ALL}")
     continue
 
